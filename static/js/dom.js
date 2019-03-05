@@ -34,7 +34,7 @@ export let dom = {
 
         for(let board of boards){
             boardList += `
-                <li>${board.title}</li>
+                <button id="${(board.title).replace(' ', '')}">${board.title}</button>
             `;
         }
 
