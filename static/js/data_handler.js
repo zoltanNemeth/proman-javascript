@@ -35,14 +35,18 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
-    getStatuses: function (callback) {
-        // the statuses are retrieved and then the callback function is called with the statuses
+    getColumns: function (callback) {
+        // the columns are retrieved and then the callback function is called with the statuses
     },
-    getStatus: function (statusId, callback) {
-        // the status is retrieved and then the callback function is called with the status
+    getColumn: function (columnId, callback) {
+        // the column is retrieved and then the callback function is called with the column
     },
     getCardsByBoardId: function (boardId, callback) {
         // the cards are retrieved and then the callback function is called with the cards
+        this._api_get(`/get-cards/${boardId}`, (response) => {
+            this._data = response;
+            callback(response);
+        });
     },
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
@@ -50,7 +54,7 @@ export let dataHandler = {
     createNewBoard: function (boardTitle, callback) {
         // creates new board, saves it and calls the callback function with its data
     },
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
+    createNewCard: function (cardTitle, boardId, columnId, callback) {
         // creates new card, saves it and calls the callback function with its data
     }
     // here comes more features
