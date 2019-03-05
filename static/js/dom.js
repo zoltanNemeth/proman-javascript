@@ -86,7 +86,7 @@ export let dom = {
         let boardName = document.getElementById(`board-name-${boardId}`);
 
         function hideBoard(event) {
-            $('#boards div').remove();
+            $(`#board-${boardId}`).remove();
             boardName.removeEventListener('click', hideBoard);
             boardName.addEventListener('click', showBoard);
         }
@@ -99,6 +99,7 @@ export let dom = {
 
         boardName.addEventListener('click', showBoard);
     }
+
 
     // here comes more features
 };
