@@ -85,7 +85,6 @@ export let dom = {
         // creates an event listener for the name of the board that is listed on the homepage
         let boardName = document.getElementById(`board-name-${boardId}`);
 
-
         function hideBoard(event) {
             $('#boards div').remove();
             boardName.removeEventListener('click', hideBoard);
@@ -98,24 +97,8 @@ export let dom = {
             boardName.addEventListener('click', hideBoard);
         }
 
-
         boardName.addEventListener('click', showBoard);
-
-
-        // boardName.addEventListener('click', function () {
-        //     dom.loadCards(boardId, boardTitle);
-
-            // TODO: disable event listener after one click &&
-            //  make new event listener that removes the shown board
-            //  then enables the first one again
-            //  && so on and so on...
-
-            // boardName.addEventListener('click', function () {
-            //     let currentBoard = document.getElementById(`board-${boardId}`);
-            //     currentBoard.remove();
-            // });
-
-        // });
     }
+
     // here comes more features
 };
