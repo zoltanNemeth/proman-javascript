@@ -46,14 +46,13 @@ export let dom = {
     },
     loadCards: function (boardId, boardTitle) {
         // retrieves cards and makes showCards called
-        dataHandler.getCardsByBoardId(boardId, function(cards){
-            dom.showCards(cards, boardTitle);
-        } )
+        return dataHandler.getCardsByBoardId(boardId, function(cards){
+           return dom.showCards(cards, boardTitle);
+        });
     },
     showCards: function (cards, boardTitle) {
         // shows the cards of a board
         // it adds necessary event listeners also
-        console.log(cards);
         let boardsContainer = document.getElementById('boards');
 
         let currentBoard = `
@@ -79,17 +78,32 @@ export let dom = {
         }
 
         currentBoard += '</div>';
-
         dom._appendToElement(boardsContainer, currentBoard);
 
     },
     addBoardNameListener (boardId, boardTitle) {
         // creates an event listener for the name of the board that is listed on the homepage
         let boardName = document.getElementById(`board-name-${boardId}`);
-        console.log(boardName);
 
-        boardName.addEventListener('click', function () {
+
+        function hideBoard(event) {
+            $('#boards div').remove();
+            boardName.removeEventListener('click', hideBoard);
+            boardName.addEventListener('click', showBoard);
+        }
+
+        function showBoard(event) {
             dom.loadCards(boardId, boardTitle);
+            boardName.removeEventListener('click', showBoard);
+            boardName.addEventListener('click', hideBoard);
+        }
+
+
+        boardName.addEventListener('click', showBoard);
+
+
+        // boardName.addEventListener('click', function () {
+        //     dom.loadCards(boardId, boardTitle);
 
             // TODO: disable event listener after one click &&
             //  make new event listener that removes the shown board
@@ -100,8 +114,8 @@ export let dom = {
             //     let currentBoard = document.getElementById(`board-${boardId}`);
             //     currentBoard.remove();
             // });
-        });
-        boardName.removeEventListener();
+
+        // });
     }
     // here comes more features
 };
