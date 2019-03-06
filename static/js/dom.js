@@ -69,7 +69,11 @@ export let dom = {
 
             for (let card of cards) {
                 if (card.column_name.title === boardColumns[i]) {
-                    columnDiv += `<p>${card.title}</p>`;
+                    let cardDiv = `<div id="card-${card.id}">
+                                        ${card.title}
+                                        <button type="button" class="delete-card" id="delete-card-${card.id}">X</button>
+                                    </div>`;
+                    columnDiv += cardDiv;
                 }
             }
 
@@ -98,6 +102,14 @@ export let dom = {
         }
 
         boardName.addEventListener('click', showBoard);
+    },
+    deleteCard: function () {
+        let deleteButton = document.getElementsByClassName('delete-card');
+        for (button of deleteButton) {
+            button.addEventListener('click', function () {
+                alert('OK')
+            })
+        }
     }
 
 
