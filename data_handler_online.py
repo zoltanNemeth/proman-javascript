@@ -39,12 +39,26 @@ def get_cards_for_board(cursor, board_id):
 
 @connection.connection_handler
 def get_latest_column_order(cursor, board_id, column_id):
-    pass
+    cursor.execute("""SELECT card_order FROM cards
+                        WHERE (board_id = %(board_id)s AND column_id = %(column_id)s);""",
+                   {'board_id': board_id,
+                    'column_id': column_id})
+    next_card_number = 1
+    for item in cursor.fetchall():
+        next_card_number = item['card_order'] + 1
+
+    return next_card_number
 
 
 # @connection.connection_handler
-# def add_card_to_board(cursor, card_title, board_id):
-#     cursor.execute("""INSERT INTO cards VALUES """)
+# def add_card_to_board(cursor, card_data):
+#     cursor.execute("""INSERT INTO cards (board_id, title, column_id, card_order)
+#                       VALUES (%(board_id)s, %(title)s, %(column_id)s, %(card_order)s);""",
+#                    {'board_id': card_data['board_id'],
+#                     'title': card_data['title'],
+#                     'column_id': card_data['column_id'],
+#                     'card_order': get_latest_column_order(card_data['board_id'], card_data['column_id'])
+#                     })
 #
 #     INSERT
 #     INTO
