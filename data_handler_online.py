@@ -35,3 +35,11 @@ def get_cards_for_board(cursor, board_id):
     for card in cards:
         card["column_name"] = get_card_column(card["column_id"])
     return cards
+
+
+@connection.connection_handler
+def delete_cards(cursor, card_id):
+    cursor.execute(""" DELETE FROM cards 
+                    WHERE id = %(card_id)s;""",
+                   {"card_id": card_id})
+
