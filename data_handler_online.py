@@ -50,17 +50,12 @@ def get_latest_column_order(cursor, board_id, column_id):
     return next_card_number
 
 
-# @connection.connection_handler
-# def add_card_to_board(cursor, card_data):
-#     cursor.execute("""INSERT INTO cards (board_id, title, column_id, card_order)
-#                       VALUES (%(board_id)s, %(title)s, %(column_id)s, %(card_order)s);""",
-#                    {'board_id': card_data['board_id'],
-#                     'title': card_data['title'],
-#                     'column_id': card_data['column_id'],
-#                     'card_order': get_latest_column_order(card_data['board_id'], card_data['column_id'])
-#                     })
-#
-#     INSERT
-#     INTO
-#     cards(board_id, title, column_id, card_order)
-#     VALUES(1, 'Sziporka', 3, 1);
+@connection.connection_handler
+def add_card_to_board(cursor, card_data):
+    cursor.execute("""INSERT INTO cards (board_id, title, column_id, card_order)
+                      VALUES (%(board_id)s, %(title)s, %(column_id)s, %(card_order)s);""",
+                   {'board_id': card_data['board_id'],
+                    'title': card_data['title'],
+                    'column_id': card_data['column_id'],
+                    'card_order': get_latest_column_order(card_data['board_id'], card_data['column_id'])
+                    })

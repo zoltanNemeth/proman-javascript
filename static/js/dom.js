@@ -54,10 +54,14 @@ export let dom = {
         // shows the cards of a board
         // it adds necessary event listeners also
         let boardsContainer = document.getElementById('boards');
+        let boardId = cards[0].board_id;
 
         let currentBoard = `
-             <div id="board-${cards[0].board_id}" class="row">
-                <button id="board-${cards[0].board_id}-new-card">New card</button>
+             <div id="board-${boardId}" class="row">
+                <form action="/${boardId}/new-card" method="post">
+                    <input type="text" name="board-${boardId}-new-card" placeholder="New card">
+                    <button id="board-${boardId}-new-card">Add</button>
+                </form>    
                 <h2 id="board-title">${boardTitle}</h2><br>
                `;
         let boardColumns = { 1: 'New', 2: 'In progress', 3: 'Testing', 4: 'Done'};
@@ -80,6 +84,7 @@ export let dom = {
 
         currentBoard += '</div>';
         dom._appendToElement(boardsContainer, currentBoard);
+        dom.addCreateCardButtonListener(boardId);
     },
     addBoardNameListener: function (boardId, boardTitle) {
         // creates an event listener for the name of the board that is listed on the homepage
@@ -98,5 +103,12 @@ export let dom = {
         }
 
         boardName.addEventListener('click', showBoard);
+    },
+    addCreateCardButtonListener: function (boardId) {
+        let createCardButton = document.getElementById(`board-${boardId}-new-card`);
+
+
+
+
     }
 };
