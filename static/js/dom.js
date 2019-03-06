@@ -38,10 +38,10 @@ export let dom = {
 
         const outerHtml = `<ul class="board-container">${boardList}</ul>`;
 
-        this._appendToElement(document.querySelector('#boards'), outerHtml);
+        dom._appendToElement(document.querySelector('#boards'), outerHtml);
 
         for (let board of boards) {
-            this.addBoardNameListener(board.id, board.title);
+            dom.addBoardNameListener(board.id, board.title);
         }
     },
     loadCards: function (boardId, boardTitle) {
@@ -57,7 +57,8 @@ export let dom = {
 
         let currentBoard = `
              <div id="board-${cards[0].board_id}" class="row">
-                <h2>${boardTitle}</h2>
+                <button id="board-${cards[0].board_id}-new-card">New card</button>
+                <h2 id="board-title">${boardTitle}</h2><br>
                `;
         let boardColumns = { 1: 'New', 2: 'In progress', 3: 'Testing', 4: 'Done'};
 
@@ -79,9 +80,8 @@ export let dom = {
 
         currentBoard += '</div>';
         dom._appendToElement(boardsContainer, currentBoard);
-
     },
-    addBoardNameListener (boardId, boardTitle) {
+    addBoardNameListener: function (boardId, boardTitle) {
         // creates an event listener for the name of the board that is listed on the homepage
         let boardName = document.getElementById(`board-name-${boardId}`);
 
@@ -99,7 +99,4 @@ export let dom = {
 
         boardName.addEventListener('click', showBoard);
     }
-
-
-    // here comes more features
 };

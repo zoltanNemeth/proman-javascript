@@ -35,3 +35,18 @@ def get_cards_for_board(cursor, board_id):
     for card in cards:
         card["column_name"] = get_card_column(card["column_id"])
     return cards
+
+
+@connection.connection_handler
+def get_latest_column_order(cursor, board_id, column_id):
+    pass
+
+
+# @connection.connection_handler
+# def add_card_to_board(cursor, card_title, board_id):
+#     cursor.execute("""INSERT INTO cards VALUES """)
+#
+#     INSERT
+#     INTO
+#     cards(board_id, title, column_id, card_order)
+#     VALUES(1, 'Sziporka', 3, 1);
