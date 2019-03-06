@@ -2,17 +2,15 @@ import connection
 
 
 @connection.connection_handler
-def get_card_status(cursor, column_id):
+def get_card_column(cursor, column_id):
     """
     Find the first status matching the given id
     :param column_id:
     :return: str
     """
-    cursor.execute("""SELECT question_id, message FROM answer
-                          WHERE user_id = %(user_id)s;""",
-                   {'user_id': user_id})
-    statuses = cursor.fetchall()
-    return next((status['title'] for status in statuses if status['id'] == str(status_id)), 'Unknown')
+    cursor.execute("""SELECT * FROM columns;""")
+    columns = cursor.fetchall()
+    return next((status['title'] for status in columns if status['id'] == str(column_id)), 'Unknown')
 
 
 @connection.connection_handler
@@ -26,12 +24,10 @@ def get_boards(cursor):
     return boards
 
 
-def get_cards_for_board(board_id):
-    persistence.clear_cache()
-    all_cards = persistence.get_cards()
-    matching_cards = []
-    for card in all_cards:
-        if card['board_id'] == str(board_id):
-            card['status_id'] = get_card_status(card['status_id'])  # Set textual status for the card
-            matching_cards.append(card)
-    return matching_cards
+@connection.connection_handler
+def get_cards_for_board(cursor, board_id):
+    cursor.execute("""SELECT * FROM cards
+                    WHERE board_id = %(board_id)s;""",
+                   {"board_id": board_id})
+    boards = cursor.fetchall()
+    return boards
