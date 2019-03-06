@@ -81,7 +81,7 @@ export let dom = {
         dom._appendToElement(boardsContainer, currentBoard);
 
     },
-    addBoardNameListener (boardId, boardTitle) {
+    addBoardNameListener: function (boardId, boardTitle) {
         // creates an event listener for the name of the board that is listed on the homepage
         let boardName = document.getElementById(`board-name-${boardId}`);
 
@@ -98,7 +98,7 @@ export let dom = {
         }
 
         boardName.addEventListener('click', showBoard);
-    }
+    },
     setChangeColumnFeature: function () {
         let board_1 = document.getElementById('board-1');
         let board_2 = document.getElementById('board-2');
