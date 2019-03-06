@@ -68,7 +68,7 @@ export let dom = {
             `;
 
             for (let card of cards) {
-                if (card.status_id === boardColumns[i].toLowerCase()) {  // TODO: change 'status_id' to 'column_id' for backend
+                if (card.column_name.title === boardColumns[i]) {
                     columnDiv += `<p>${card.title}</p>`;
                 }
             }
