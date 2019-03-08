@@ -33,10 +33,10 @@ export let dom = {
         let boardList = '';
 
         for(let board of boards){
-            boardList += `<li id="board-name-${board.id}">${board.title}</li>`;
+            boardList += `<div class="col-sm-12 col-md-12 board-list" id="board-name-${board.id}">${board.title}</div>`;
         }
 
-        const outerHtml = `<ul class="board-container">${boardList}</ul>`;
+        const outerHtml = `<div class="board-container">${boardList}</div>`;
 
         this._appendToElement(document.querySelector('#boards'), outerHtml);
 
@@ -56,20 +56,23 @@ export let dom = {
         let boardsContainer = document.getElementById('boards');
 
         let currentBoard = `
-             <div id="board-${cards[0].board_id}" class="row">
+            <div class="container">
+            <div class="row">
                 <h2>${boardTitle}</h2>
+            </div>
+             <div id="board-${cards[0].board_id}" class="row">
                `;
         let boardColumns = { 1: 'New', 2: 'In progress', 3: 'Testing', 4: 'Done'};
 
         for (let i = 1; i < 5; i++) {
             let columnDiv = `
-            <div class="column">
-                <h3>${boardColumns[i]}</h3>  
+            <div class="column col-sm-2 col-md-2">
+                <h3>${boardColumns[i]}</h3>
             `;
 
             for (let card of cards) {
                 if (card.column_name.title === boardColumns[i]) {
-                    columnDiv += `<p>${card.title}</p>`;
+                    columnDiv += `<div class="line">${card.title}</div>`;
                 }
             }
 
@@ -77,7 +80,7 @@ export let dom = {
             currentBoard += columnDiv;
         }
 
-        currentBoard += '</div>';
+        currentBoard += '</div></div>';
         dom._appendToElement(boardsContainer, currentBoard);
 
     },
