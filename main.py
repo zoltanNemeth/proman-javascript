@@ -40,9 +40,14 @@ def get_cards_for_board(board_id: int):
 
 @app.route("/delete-card", methods=['GET', 'POST'])
 def delete_card():
-    card_to_delete = request.json
-    data_handler_online.delete_cards(card_to_delete['cardId'])
-    return json.dumps("success")
+    card_to_delete = request.json['cardId']
+    board_id = data_handler_online.get_board_id_from_card_id(card_to_delete)[0]['board_id']
+
+    if board_id:
+        data_handler_online.delete_cards(card_to_delete)
+
+    cards = data_handler_online.get_cards_for_board(board_id)
+    return json.dumps(cards)
 
 
 def main():

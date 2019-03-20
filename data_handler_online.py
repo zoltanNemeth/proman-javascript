@@ -43,3 +43,13 @@ def delete_cards(cursor, card_id):
                     WHERE id = %(card_id)s;""",
                    {"card_id": card_id})
 
+
+@connection.connection_handler
+def get_board_id_from_card_id(cursor, card_id):
+    cursor.execute("""
+     SELECT board_id FROM cards 
+       WHERE id = %(card_id)s;""",
+       {"card_id": card_id})
+    board_id = cursor.fetchall()
+    return board_id
+

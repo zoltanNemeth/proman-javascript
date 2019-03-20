@@ -122,7 +122,10 @@ export let dom = {
             button.addEventListener('click', function () {
                 let card_id = this.parentNode.id;
                 let card_id_database = parseInt(card_id.substr(5));
-                dataHandler.deleteCard({'cardId':card_id_database}, dom.dragAndDrop);
+                dataHandler.deleteCard({'cardId':card_id_database}, function (response) {
+
+                    dom.showCards(response, 'Board-1')
+                });
             })
         }
     }
