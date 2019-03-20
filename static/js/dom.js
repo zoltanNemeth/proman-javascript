@@ -72,7 +72,7 @@ export let dom = {
 
             for (let card of cards) {
                 if (card.column_name.title === boardColumns[i]) {
-                    let cardDiv = `<div id="card-${card.id}">
+                    let cardDiv = `<div id=card-${card.id} class="line">
                                         ${card.title}
                                         <button type="button" class="delete-card">X</button>
                                     </div>`;
@@ -87,7 +87,7 @@ export let dom = {
         currentBoard += '</div>';
         dom._appendToElement(boardsContainer, currentBoard);
         dom.dragAndDrop();
-
+        dom.deleteCardFromBoard();
     },
     addBoardNameListener: function (boardId, boardTitle) {
         // creates an event listener for the name of the board that is listed on the homepage
@@ -122,19 +122,17 @@ export let dom = {
         }
         dragula(containers);
     },
-    deleteCard: function(cardId) {
-        return dataHandler.deleteCard(cardId, function () {
-            return dom.deleteCardFromDom(cardId);
-        })
-    },
-    deleteCardFromDom: function (cardId) {
-        let deleteButton = document.getElementsByClassName('delete-card');
-        for (let button of deleteButton) {
-            button.addEventListener('click', function (event) {
-                alert(cardId)
+    deleteCardFromBoard: function () {
+        let deleteButtons = document.getElementsByClassName('delete-card');
+        for (let button of deleteButtons) {
+            button.addEventListener('click', function () {
+                let card_id = this.parentNode.id;
+                let card_id_database = parseInt(card_id.substr(5));
+                dataHandler.deleteCard({'cardId':card_id_database}, dom.dragAndDrop);
             })
         }
     }
+
 
 
 

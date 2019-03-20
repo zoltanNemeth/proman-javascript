@@ -8,7 +8,6 @@ function init() {
     dom.loadBoards();
     // init drag & drop to loaded boards
     dom.setChangeColumnFeature();
-    dom.deleteCard();
 
 }
 

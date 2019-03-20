@@ -26,8 +26,9 @@ export let dataHandler = {
             'Content-Type': 'application/json'
           }
         })
-        .then(res => res.json())
-        .then(response => console.log('Success:', JSON.stringify(response)))
+        .then(response => response.json())  // parse the response as JSON
+        .then(json_response => console.log(json_response))
+        .then(callback());
     },
     init: function () {
     },
@@ -68,9 +69,7 @@ export let dataHandler = {
     },
     // here comes more features
     deleteCard: function (data, callback) {
-        this._api_post(`http://127.0.0.1:5000/delete-card`, data, (response) => {
-            this._data = response;
-            callback(response);
-        })
+        this._api_post(`http://127.0.0.1:5000/delete-card`, data, callback
+        )
     }
 };

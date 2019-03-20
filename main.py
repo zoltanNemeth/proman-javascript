@@ -41,11 +41,12 @@ def get_cards_for_board(board_id: int):
 @app.route("/delete-card", methods=['GET', 'POST'])
 def delete_card():
     card_to_delete = request.json
-    return json.dumps('success')
+    data_handler_online.delete_cards(card_to_delete['cardId'])
+    return json.dumps("success")
 
 
 def main():
-    app.run(host='0.0.0.0')
+    app.run()
 
     # Serving the favicon
     with app.app_context():
