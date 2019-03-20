@@ -82,6 +82,7 @@ export let dom = {
 
         currentBoard += '</div>';
         dom._appendToElement(boardsContainer, currentBoard);
+        dom.dragAndDrop();
 
     },
     addBoardNameListener: function (boardId, boardTitle) {
@@ -107,8 +108,17 @@ export let dom = {
         let board_2 = document.getElementById('board-2');
         return board_1;
 
-    }
+    },
+    dragAndDrop: function () {
+        let columns = document.getElementsByClassName('column');
+        let containers = [];
 
+        for (let col of columns) {
+            containers.push(col);
+        }
+
+        dragula(containers);
+    }
 
     // here comes more features
 };
