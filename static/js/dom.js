@@ -71,7 +71,7 @@ export let dom = {
                 if (card.column_name.title === boardColumns[i]) {
                     let cardDiv = `<div id="card-${card.id}">
                                         ${card.title}
-                                        <button type="button" class="delete-card" id="delete-card-${card.id}">X</button>
+                                        <button type="button" class="delete-card">X</button>
                                     </div>`;
                     columnDiv += cardDiv;
                 }
@@ -109,11 +109,16 @@ export let dom = {
         return board_1;
 
     },
-    deleteCard: function () {
+    deleteCard: function(cardId) {
+        return dataHandler.deleteCard(cardId, function () {
+            return dom.deleteCardFromDom(cardId);
+        })
+    },
+    deleteCardFromDom: function (cardId) {
         let deleteButton = document.getElementsByClassName('delete-card');
-        for (button of deleteButton) {
-            button.addEventListener('click', function () {
-                alert('OK')
+        for (let button of deleteButton) {
+            button.addEventListener('click', function (event) {
+                alert(cardId)
             })
         }
     }
