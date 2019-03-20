@@ -22,7 +22,7 @@ export let dom = {
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
-        dataHandler.getBoards(function(boards){
+        dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
     },
@@ -32,11 +32,11 @@ export let dom = {
 
         let boardList = '';
 
-        for(let board of boards){
-            boardList += `<li id="board-name-${board.id}">${board.title}</li>`;
+        for (let board of boards) {
+            boardList += `<div class="col-sm-12 col-md-12 board-list" id="board-name-${board.id}">${board.title}</div>`;
         }
 
-        const outerHtml = `<ul class="board-container">${boardList}</ul>`;
+        const outerHtml = `<div class="board-container">${boardList}</div>`;
 
         this._appendToElement(document.querySelector('#boards'), outerHtml);
 
@@ -46,8 +46,8 @@ export let dom = {
     },
     loadCards: function (boardId, boardTitle) {
         // retrieves cards and makes showCards called
-        return dataHandler.getCardsByBoardId(boardId, function(cards){
-           return dom.showCards(cards, boardTitle);
+        return dataHandler.getCardsByBoardId(boardId, function (cards) {
+            return dom.showCards(cards, boardTitle);
         });
     },
     showCards: function (cards, boardTitle) {
@@ -56,15 +56,18 @@ export let dom = {
         let boardsContainer = document.getElementById('boards');
 
         let currentBoard = `
-             <div id="board-${cards[0].board_id}" class="row">
-                <h2>${boardTitle}</h2>
+            <div class="container">
+                <div id="board-${cards[0].board_id}" class="row">
+                    <div class="row">
+                        <h2>${boardTitle}</h2>
+                    </div>
                `;
-        let boardColumns = { 1: 'New', 2: 'In progress', 3: 'Testing', 4: 'Done'};
+        let boardColumns = {1: 'New', 2: 'In progress', 3: 'Testing', 4: 'Done'};
 
         for (let i = 1; i < 5; i++) {
             let columnDiv = `
-            <div class="column">
-                <h3>${boardColumns[i]}</h3>  
+            <div class="column col-sm-2 col-md-2">
+                <h3>${boardColumns[i]}</h3>
             `;
 
             for (let card of cards) {
@@ -83,6 +86,7 @@ export let dom = {
 
         currentBoard += '</div>';
         dom._appendToElement(boardsContainer, currentBoard);
+        dom.dragAndDrop();
 
     },
     addBoardNameListener: function (boardId, boardTitle) {
@@ -109,6 +113,15 @@ export let dom = {
         return board_1;
 
     },
+    dragAndDrop: function () {
+        let columns = document.getElementsByClassName('column');
+        let containers = [];
+
+        for (let col of columns) {
+            containers.push(col);
+        }
+        dragula(containers);
+    },
     deleteCard: function(cardId) {
         return dataHandler.deleteCard(cardId, function () {
             return dom.deleteCardFromDom(cardId);
@@ -122,6 +135,7 @@ export let dom = {
             })
         }
     }
+
 
 
     // here comes more features

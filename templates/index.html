@@ -17,9 +17,18 @@
                 crossorigin="anonymous"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js' defer></script>
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     </head>
     <body>
-        <h1>ProMan</h1>
-        <div id="boards">Boards are loading...</div>
+        <h1 style="text-align: center">ProMan</h1>
+        <div class="container">
+            <div class="container">
+            <div class="row">
+                <div id="boards" class="col-sm-12 col-md-12">
+                    <h2 style="text-align: center">Boards</h2>
+                </div>
+            </div>
+            </div>
+        </div>
     </body>
 </html>
