@@ -107,12 +107,6 @@ export let dom = {
 
         boardName.addEventListener('click', showBoard);
     },
-    setChangeColumnFeature: function () {
-        let board_1 = document.getElementById('board-1');
-        let board_2 = document.getElementById('board-2');
-        return board_1;
-
-    },
     dragAndDrop: function () {
         let columns = document.getElementsByClassName('column');
         let containers = [];
