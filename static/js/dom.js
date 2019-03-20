@@ -1,5 +1,5 @@
 // It uses data_handler.js to visualize elements
-import { dataHandler } from "./data_handler.js";
+import {dataHandler} from "./data_handler.js";
 
 export let dom = {
     _appendToElement: function (elementToExtend, textToAppend, prepend = false) {
@@ -22,7 +22,7 @@ export let dom = {
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
-        dataHandler.getBoards(function(boards){
+        dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
     },
@@ -32,7 +32,7 @@ export let dom = {
 
         let boardList = '';
 
-        for(let board of boards){
+        for (let board of boards) {
             boardList += `<div class="col-sm-12 col-md-12 board-list" id="board-name-${board.id}">${board.title}</div>`;
         }
 
@@ -46,8 +46,8 @@ export let dom = {
     },
     loadCards: function (boardId, boardTitle) {
         // retrieves cards and makes showCards called
-        return dataHandler.getCardsByBoardId(boardId, function(cards){
-           return dom.showCards(cards, boardTitle);
+        return dataHandler.getCardsByBoardId(boardId, function (cards) {
+            return dom.showCards(cards, boardTitle);
         });
     },
     showCards: function (cards, boardTitle) {
@@ -57,12 +57,12 @@ export let dom = {
 
         let currentBoard = `
             <div class="container">
-            <div class="row">
-                <h2>${boardTitle}</h2>
-            </div>
-             <div id="board-${cards[0].board_id}" class="row">
+                <div id="board-${cards[0].board_id}" class="row">
+                    <div class="row">
+                        <h2>${boardTitle}</h2>
+                    </div>
                `;
-        let boardColumns = { 1: 'New', 2: 'In progress', 3: 'Testing', 4: 'Done'};
+        let boardColumns = {1: 'New', 2: 'In progress', 3: 'Testing', 4: 'Done'};
 
         for (let i = 1; i < 5; i++) {
             let columnDiv = `
@@ -80,7 +80,7 @@ export let dom = {
             currentBoard += columnDiv;
         }
 
-        currentBoard += '</div></div>';
+        currentBoard += '</div>';
         dom._appendToElement(boardsContainer, currentBoard);
 
     },
