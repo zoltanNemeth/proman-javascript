@@ -62,4 +62,5 @@ INSERT INTO cards (board_id, title, column_id, card_order) VALUES (2, 'Zolcsi', 
 INSERT INTO cards (board_id, title, column_id, card_order) VALUES (2, 'Z(s)ombi', 4, 1);
 INSERT INTO cards (board_id, title, column_id, card_order) VALUES (2, 'Fricus', 2, 1);
 INSERT INTO cards (board_id, title, column_id, card_order) VALUES (2, 'Pitbula', 2, 2);
+INSERT INTO cards (board_id, title, column_id, card_order) VALUES (2, 'Lizike', 3, 1);
 INSERT INTO cards (board_id, title, column_id, card_order) VALUES (2, 'Scum Master', 1, 1);
