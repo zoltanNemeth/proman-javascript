@@ -59,7 +59,7 @@ export let dom = {
             <div class="container">
                 <div id="board-${cards[0].board_id}" class="row">
                     <div class="row">
-                        <input type="text" id="board-${cards[0].board_id}-title" value="${boardTitle}" class="form-control">
+                        <h2 id="board-${cards[0].board_id}-title">${boardTitle}</h2>
                     </div>
                `;
         let boardColumns = {1: 'New', 2: 'In progress', 3: 'Testing', 4: 'Done'};
@@ -88,20 +88,21 @@ export let dom = {
         dom._appendToElement(boardsContainer, currentBoard);
         dom.dragAndDrop();
         dom.deleteCardFromBoard();
+        let title = document.querySelector(`#board-${cards[0].board_id}-title`);
+        dom.changeTitle(title, cards, boardTitle, cards[0].board_id);
     },
-    addBoardNameListener: function (boardId, boardTitle) {
+    addBoardNameListener: function (boardId) {
         // creates an event listener for the name of the board that is listed on the homepage
         let boardName = document.getElementById(`board-name-${boardId}`);
 
         function hideBoard(event) {
-            let inputField = document.querySelector(`#board-${boardId}-title`);
-            dom.alterBoardTitle(inputField, boardId);
             $(`#board-${boardId}`).remove();
             boardName.removeEventListener('click', hideBoard);
             boardName.addEventListener('click', showBoard);
         }
 
         function showBoard(event) {
+            let boardTitle = document.querySelector(`#board-name-${boardId}`).textContent;
             dom.loadCards(boardId, boardTitle);
             boardName.removeEventListener('click', showBoard);
             boardName.addEventListener('click', hideBoard);
@@ -109,14 +110,45 @@ export let dom = {
 
         boardName.addEventListener('click', showBoard);
     },
-    alterBoardTitle: function(inputField, boardId) {
-        let data = {
-            boardId: boardId,
-            boardTitle: inputField.value
-        }
-        dataHandler.updateBoardTitle(data,function() {
-            console.log("Board title updated");
+    changeTitle: function(title, cards, boardTitle, boardId) {
+        title.addEventListener("click", function() {
+            let inputField = document.createElement("input");
+            inputField.type = "text";
+            inputField.id = `board-${cards[0].board_id}-title`;
+            inputField.value= `${boardTitle}`;
+            inputField.classList.add("form-control");
+            title.parentNode.replaceChild(inputField, title);
+            dom.saveNewTitle(inputField, boardId, boardTitle, cards);
         })
+    },
+    saveNewTitle: function(inputField, boardId, boardTitle, cards) {
+        inputField.addEventListener('keyup', function(event) {
+            if (event.key === "Enter") {
+                let data = {
+                    boardId: boardId,
+                    boardTitle: inputField.value
+                };
+                dataHandler.updateBoardTitle(data,function() {
+                    console.log("Board title updated");
+                });
+                let title = document.createElement("h2");
+                title.id = `id="board-${cards[0].board_id}-title` ;
+                title.innerHTML = inputField.value;
+                inputField.parentNode.replaceChild(title, inputField);
+                dom.changeTitleInDom(boardId, inputField.value);
+                dom.changeTitle(title, cards, inputField.value, boardId);
+            } else if (event.key === "Escape") {
+                let title = document.createElement("h2");
+                title.id = `id="board-${cards[0].board_id}-title` ;
+                title.innerHTML = boardTitle;
+                inputField.parentNode.replaceChild(title, inputField);
+                dom.changeTitle(title, cards, inputField.value, boardId);
+            }
+        });
+    },
+    changeTitleInDom: function(boardId, boardTitle) {
+        let board = document.querySelector(`#board-name-${boardId}`);
+        board.innerHTML = boardTitle;
     },
     dragAndDrop: function () {
         let columns = document.getElementsByClassName('column');
