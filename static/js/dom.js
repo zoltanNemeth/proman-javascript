@@ -120,27 +120,28 @@ export let dom = {
         let deleteButtons = document.getElementsByClassName('delete-card');
         for (let button of deleteButtons) {
             button.addEventListener('click', function () {
-                let card_id = this.parentNode.id;
-                let card_id_database = parseInt(card_id.substr(5));
-                dataHandler.deleteCard({'cardId':card_id_database}, function (response) {
-                    let board_id = button.parentNode.parentNode.parentNode.id;
-                    let board_id_database = parseInt(board_id.substr(6));
-                    let board = document.getElementById(`board-${board_id_database}`);
+                let cardId = this.parentNode.id;
+                let cardIdDataBase = parseInt(cardId.substr(5));
+                dataHandler.deleteCard({'cardId':cardIdDataBase}, function (response) {
+                    let boardId = button.parentNode.parentNode.parentNode.id;
+                    let boardIdDataBase = parseInt(boardId.substr(6));
+                    let board = document.getElementById(`board-${boardIdDataBase}`);
                     board.remove();
-                    dataHandler.getBoards(function (boards) {
-                        for (let board of boards) {
-                            if (board['id'] == board_id_database) {
-                                let board_title = board['title'];
-                                dom.showCards(response, board_title)
-                            }
-                        }
-                    });
+                    dom.getBoardTitle(boardIdDataBase, response);
                 });
             })
         }
+    },
+    getBoardTitle: function (boardIdDataBase, response) {
+        dataHandler.getBoards(function (boards) {
+            for (let board of boards) {
+                if (board['id'] === boardIdDataBase) {
+                    let boardTitle = board['title'];
+                    dom.showCards(response, boardTitle)
+                }
+            }
+        });
     }
-
-
 
 
     // here comes more features
