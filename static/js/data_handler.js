@@ -70,5 +70,9 @@ export let dataHandler = {
     deleteCard: function (data, callback) {
         this._api_post(`http://127.0.0.1:5000/delete-card`, data, callback
         )
+    },
+    updateBoardTitle: function (data, callback) {
+        this._api_post(`http://127.0.0.1:5000/rename-board`, data, callback
+        )
     }
 };

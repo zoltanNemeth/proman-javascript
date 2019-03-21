@@ -1,7 +1,7 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, jsonify
 from util import json_response
 
-import data_handler
+
 import data_handler_online
 
 import json
@@ -36,6 +36,14 @@ def get_cards_for_board(board_id: int):
     """
     cards = data_handler_online.get_cards_for_board(board_id)
     return cards
+
+
+@app.route("/rename-board", methods=["POST"])
+def update_board_title():
+    board_id = request.json['boardId']
+    board_title = request.json['boardTitle']
+    data_handler_online.update_board_title(board_id, board_title)
+    return jsonify("Success")
 
 
 @app.route("/delete-card", methods=['GET', 'POST'])

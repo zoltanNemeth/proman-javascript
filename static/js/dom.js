@@ -1,5 +1,5 @@
 // It uses data_handler.js to visualize elements
-import { dataHandler } from "./data_handler.js";
+import {dataHandler} from "./data_handler.js";
 
 export let dom = {
     _appendToElement: function (elementToExtend, textToAppend, prepend = false) {
@@ -59,7 +59,7 @@ export let dom = {
             <div class="container">
                 <div id="board-${cards[0].board_id}" class="row">
                     <div class="row">
-                        <h2>${boardTitle}</h2>
+                        <input type="text" id="board-${cards[0].board_id}-title" value="${boardTitle}" class="form-control">
                     </div>
                `;
         let boardColumns = {1: 'New', 2: 'In progress', 3: 'Testing', 4: 'Done'};
@@ -94,6 +94,8 @@ export let dom = {
         let boardName = document.getElementById(`board-name-${boardId}`);
 
         function hideBoard(event) {
+            let inputField = document.querySelector(`#board-${boardId}-title`);
+            dom.alterBoardTitle(inputField, boardId);
             $(`#board-${boardId}`).remove();
             boardName.removeEventListener('click', hideBoard);
             boardName.addEventListener('click', showBoard);
@@ -106,6 +108,15 @@ export let dom = {
         }
 
         boardName.addEventListener('click', showBoard);
+    },
+    alterBoardTitle: function(inputField, boardId) {
+        let data = {
+            boardId: boardId,
+            boardTitle: inputField.value
+        }
+        dataHandler.updateBoardTitle(data,function() {
+            console.log("Board title updated");
+        })
     },
     dragAndDrop: function () {
         let columns = document.getElementsByClassName('column');

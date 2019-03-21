@@ -53,3 +53,11 @@ def get_board_id_from_card_id(cursor, card_id):
     board_id = cursor.fetchall()
     return board_id
 
+
+@connection.connection_handler
+def update_board_title(cursor, board_id, board_title):
+    cursor.execute("""UPDATE boards
+                      SET title = %(board_title)s
+                      WHERE id = %(board_id)s;""",
+                        {"board_id": board_id,
+                        "board_title": board_title})
